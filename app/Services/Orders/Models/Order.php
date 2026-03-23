@@ -53,4 +53,9 @@ class Order extends Model implements Payable
     {
         return $this->id;
     }
+
+    public function getPayableUrl(): string
+    {
+        return route('orders.show', $this->uuid);
+    }
 }
