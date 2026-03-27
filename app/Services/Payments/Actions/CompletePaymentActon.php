@@ -11,6 +11,10 @@ class CompletePaymentActon
     {
         $payment->status = PaymentStatusEnum::completed;
 
-        return $payment->save();
+        $updated = $payment->save();
+
+        $payment->payable->onPaymentComplete();
+
+        return $updated;
     }
 }

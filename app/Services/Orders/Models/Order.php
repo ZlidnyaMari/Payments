@@ -58,4 +58,9 @@ class Order extends Model implements Payable
     {
         return route('orders.show', $this->uuid);
     }
+
+    public function onPaymentComplete(): void
+    {
+        info("Payment complete", ['id' => $this->uuid]);
+    }
 }

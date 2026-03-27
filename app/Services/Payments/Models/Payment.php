@@ -2,7 +2,7 @@
 
 namespace App\Services\Payments\Models;
 
-use App\Services\Orders\Models\Order;
+use App\Services\Payments\Contracts\Payable;
 use App\Services\Payments\Enums\PaymentDriverEnum;
 use App\Services\Payments\Enums\PaymentStatusEnum;
 use App\Support\Values\AmountValue;
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property AmountValue $amount
  * @property string $payable_type
  * @property int $payable_id
- * @property Order $payable
+ * @property Payable $payable
  * @property int $method_id
  * @property PaymentMethod $method
  * @property PaymentDriverEnum $driver
