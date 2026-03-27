@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Collection;
 class GetPaymentMethodAction
 {
     private bool|null $active = null;
+    private int|null $id = null;
+
+    public function id(int $id): static
+    {
+        $this->id = $id;
+        return $this;
+    }
 
     public function active(bool $active): static
     {
@@ -16,7 +23,7 @@ class GetPaymentMethodAction
         return $this;
     }
 
-    public function run(): Collection
+    public function get(): Collection
     {
         $query = PaymentMethod::query();
 
@@ -25,5 +32,20 @@ class GetPaymentMethodAction
         }
 
         return $query->get();
+    }
+
+    public function first(): PaymentMethod|null
+    {
+        $query =  PaymentMethod::query();
+
+        if (!is_null($this->active)) {
+            $query->where('active', $this->active);
+        }
+
+        if (!is_null($this->id)) {
+            $query->where('id', $this->id);
+        }
+
+        return $query->first();
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Services\Payments;
 
+use App\Services\Payments\Actions\CancelPaymentActon;
+use App\Services\Payments\Actions\CompletePaymentActon;
 use App\Services\Payments\Actions\CreatePaymentAction;
-use App\Services\Payments\Actions\FindPaymentMethodAction;
 use App\Services\Payments\Actions\GetPaymentMethodAction;
+use App\Services\Payments\Actions\GetPaymentsAction;
 use App\Services\Payments\Actions\UpdatePaymentAction;
 use App\Services\Payments\Drivers\PaymentDriver;
 use App\Services\Payments\Drivers\PaymentDriverFactory;
@@ -22,9 +24,9 @@ class PaymentService
         return app(CreatePaymentAction::class);
     }
 
-    public function findPaymentMethod(): FindPaymentMethodAction
+    public function getPayments(): GetPaymentsAction
     {
-        return app(FindPaymentMethodAction::class);
+        return app(GetPaymentsAction::class);
     }
 
     public function updatePayment(): UpdatePaymentAction
@@ -35,5 +37,15 @@ class PaymentService
     public function getPaymentMethods(): GetPaymentMethodAction
     {
         return app(GetPaymentMethodAction::class);
+    }
+
+    public function completePayment(): CompletePaymentActon
+    {
+        return app(CompletePaymentActon::class);
+    }
+
+    public function cancelPayment(): CancelPaymentActon
+    {
+        return app(CancelPaymentActon::class);
     }
 }

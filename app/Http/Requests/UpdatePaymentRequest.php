@@ -2,9 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Services\Payments\Models\PaymentMethod;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class UpdatePaymentRequest extends FormRequest
 {
@@ -19,9 +17,7 @@ class UpdatePaymentRequest extends FormRequest
         return [
                 'method_id' => [
                     'required', 'integer',
-                    Rule::exists(PaymentMethod::class, 'id')
-                        ->where('active', true),
-                    ],
-            ];
+            ]
+        ];
     }
 }

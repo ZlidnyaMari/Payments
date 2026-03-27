@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePaymentRequest;
-use App\Services\Payments\Enums\PaymentStatusEnum;
 use App\Services\Payments\Models\Payment;
 use App\Services\Payments\PaymentService;
 use Illuminate\Http\Request;
@@ -23,7 +22,7 @@ class PaymentController extends Controller
         $methods = $this->paymentService
             ->getPaymentMethods()
             ->active(true)
-            ->run();
+            ->get();
 
         return view('payments.checkout', compact('payment', 'methods'));
     }
@@ -34,10 +33,12 @@ class PaymentController extends Controller
         $validate = $request->validated();
 
         $method = $this->paymentService
-            ->findPaymentMethod()
+            ->getPaymentMethods()
             ->id($validate['method_id'])
             ->active(true)
-            ->run();
+            ->first();
+
+        abort_unless($method, 404);
 
         $this->paymentService
             ->updatePayment()
@@ -50,8 +51,12 @@ class PaymentController extends Controller
     public function process(Payment $payment): View
     {
         abort_unless($payment->status->isPending(), 404);
+        abort_unless($payment->method_id, 404);
 
-        return \view("payments.drivers.{$payment->driver->value}", compact('payment'));
+        $driver = $this->paymentService->getDriver($payment->driver);
+
+        return $driver->view($payment);
+        //return \view("payments::{$payment->driver->value}", compact('payment'));
 
     }
     //только тестовый способ оплаты
@@ -61,8 +66,7 @@ class PaymentController extends Controller
         abort_unless($payment->driver->isTest(), 404);
         abort_if(app()->isProduction(), 404);
 
-        $payment->status = PaymentStatusEnum::completed;
-        $payment->save();
+        $this->paymentService->completePayment()->run($payment);
 
         return redirect()->route('payments.success', [
             'uuid' => $payment->uuid
@@ -75,8 +79,7 @@ class PaymentController extends Controller
         abort_unless($payment->driver->isTest(), 404);
         abort_if(app()->isProduction(), 404);
 
-        $payment->status = PaymentStatusEnum::cancelled;
-        $payment->save();
+        $this->paymentService->cancelPayment()->run($payment);
 
         return redirect()->route('payments.failure', [
             'uuid' => $payment->uuid
@@ -89,7 +92,8 @@ class PaymentController extends Controller
 
         abort_unless(Str::isUuid($uuid), 404);
 
-        $payment = Payment::query()->where(compact('uuid'))->firstOrFail();
+        $payment = $this->paymentService->getPayments()->uuid($uuid)->first();
+
         return \view('payments.success', compact('payment'));
     }
 
@@ -99,7 +103,7 @@ class PaymentController extends Controller
 
         abort_unless(Str::isUuid($uuid), 404);
 
-        $payment = Payment::query()->where(compact('uuid'))->firstOrFail();
+        $payment = $this->paymentService->getPayments()->uuid($uuid)->first();
 
         return \view('payments.failure', compact('payment'));
     }
