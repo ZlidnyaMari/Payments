@@ -25,4 +25,26 @@ enum OrdersStatusEnum: string
             self::cancelled => 'danger',
         };
     }
+
+    public function is(OrdersStatusEnum $status): bool
+    {
+        return $this === $status;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->is(self::completed);
+    }
+
+    public function isPending(): bool
+    {
+        return $this->is(self::pending);
+    }
+
+    public function isCancelled(): bool
+    {
+        return $this->is(self::cancelled);
+    }
+
+
 }

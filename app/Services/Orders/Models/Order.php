@@ -3,6 +3,7 @@
 namespace App\Services\Orders\Models;
 
 use App\Services\Orders\Enum\OrdersStatusEnum;
+use App\Services\Orders\OrderService;
 use App\Services\Payments\Contracts\Payable;
 use App\Support\Values\AmountValue;
 use Carbon\Carbon;
@@ -61,6 +62,7 @@ class Order extends Model implements Payable
 
     public function onPaymentComplete(): void
     {
-        info("Payment complete", ['id' => $this->uuid]);
+        $orderService = app(OrderService::class);
+        $orderService->completeOrder()->run($this);
     }
 }
