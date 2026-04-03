@@ -9,6 +9,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{route('orders')}}">Заказы</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{{route('subscription')}}">Подписки</a>
+                </li>
             </ul>
         </div>
     </div>
