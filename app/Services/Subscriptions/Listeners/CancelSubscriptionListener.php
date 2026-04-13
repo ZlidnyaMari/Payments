@@ -2,10 +2,9 @@
 
 namespace App\Services\Subscriptions\Listeners;
 
-use App\Services\Payments\Events\PaymentCompletedEvent;
+use App\Services\Payments\Events\PaymentCancelledEvent;
 use App\Services\Subscriptions\Enums\SubscriptionStatusEnum;
 use App\Services\Subscriptions\Models\Subscription;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class CancelSubscriptionListener
 {
@@ -15,7 +14,7 @@ class CancelSubscriptionListener
         //
     }
 
-    public function handle(PaymentCompletedEvent $event): void
+    public function handle(PaymentCancelledEvent $event): void
     {
         $payableType = $event->data->payableType;
         $payableId = $event->data->payableId;
