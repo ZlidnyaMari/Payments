@@ -7,7 +7,7 @@ use App\Services\Subscriptions\Enums\SubscriptionStatusEnum;
 use App\Services\Subscriptions\Models\Subscription;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class ActiveSubscriptionListener
+class CancelSubscriptionListener
 {
 
     public function __construct()
@@ -30,6 +30,6 @@ class ActiveSubscriptionListener
             return;
         }
 
-        $subscription->update(['status' => SubscriptionStatusEnum::active]);
+        $subscription->update(['status' => SubscriptionStatusEnum::cancelled]);
     }
 }
