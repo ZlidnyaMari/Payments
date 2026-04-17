@@ -28,5 +28,13 @@ class InstallPaymentsCommand extends Command
                'name' => 'Тестовый способ',
                'active' => !app()->isProduction()
             ]);
+
+        PaymentMethod::query()
+            ->firstOrCreate([
+                'driver' => PaymentDriverEnum::tinkoff
+            ], [
+                'name' => 'Банковская карта',
+                'active' => false
+            ]);
     }
 }

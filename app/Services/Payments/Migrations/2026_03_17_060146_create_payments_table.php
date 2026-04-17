@@ -33,6 +33,7 @@ return new class extends Migration
             $table->string('driver')->nullable();
            // $table->timestamp('expires_at'); // истечение срока платежа. если человек не оплатил в течении какого-то времени
                                                 // и по истечении срока отменять его, например через команду крон
+            $table->string('driver_payment_id')->nullable()->comment('ID платежа провайдера');
 
             $table->timestamps();
 
