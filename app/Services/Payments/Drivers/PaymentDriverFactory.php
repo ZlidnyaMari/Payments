@@ -9,8 +9,8 @@ class PaymentDriverFactory
     public function make(PaymentDriverEnum $driver): PaymentDriver
     {
         return match ($driver) {
-            PaymentDriverEnum::test => new TestPaymentDriver,
-            PaymentDriverEnum::tinkoff => new TimkoffDriver,
+            PaymentDriverEnum::test => app(TestPaymentDriver::class),
+            PaymentDriverEnum::tinkoff => app(TimkoffDriver::class),
             default => throw new \InvalidArgumentException("Драйвер [{$driver->value}] не поддерживается"),
         };
     }

@@ -6,23 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Services\Payments\PaymentService;
 use App\Services\Tinkoff\Enums\PaymentStatusEnum;
 use App\Services\Tinkoff\Exceptions\InvalidTokenException;
-use App\Services\Tinkoff\TinkoffConfig;
 use App\Services\Tinkoff\TinkoffService;
 use Illuminate\Http\Request;
 
 class TinkoffController extends Controller
 {
-    public function __invoke(Request $request, PaymentService $paymentService)
-    {
-        $config = config('services.tinkoff');
-
-        $tinkoffService = new TinkoffService(
-            new TinkoffConfig(
-                terminal: $config['terminal'],
-                password: $config['password']
-            ),
-        );
-
+    public function __invoke(
+        Request $request,
+        PaymentService $paymentService,
+        TinkoffService $tinkoffService
+    ) {
         try {
             $entity = $tinkoffService->checkCallback($request->all());
             $payment = $paymentService->getPayments()->uuid($entity->order)->first(); // не лишним будет проверить наличие платежа.
