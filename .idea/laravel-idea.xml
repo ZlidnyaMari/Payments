@@ -9,6 +9,7 @@
     <option name="frameworkFound" value="true" />
     <option name="translation">
       <LaravelTranslation>
+        <option name="defaultLanguageFromConfig" value="ru" />
         <option name="defaultPath" value="lang" />
       </LaravelTranslation>
     </option>
