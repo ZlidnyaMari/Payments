@@ -28,7 +28,7 @@
                         @foreach($subscriptions as $subscription)
                             <tr>
                                 <td>{{$subscription->uuid}}</td>
-                                <td>{!! $subscription->price !!} {{$subscription->currency_id}}</td>
+                                <td>{{ money($subscription->price, $subscription->currency_id ) }}</td>
                                 <td class="text-{{$subscription->status->color()}}">{{$subscription->status->name()}}</td>
                                 <td>
                                     <a href="{{route('subscription.show', $subscription->uuid)}}">

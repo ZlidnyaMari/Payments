@@ -20,7 +20,7 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-4">Сумма заказа</div>
-                            <div class="col-8">{!! $order->amount !!} {{$order->currency_id}}</div>
+                            <div class="col-8">{{ money(convert($order->amount), currency()) }}</div>
                         </div>
                     </li>
                     <li class="list-group-item">

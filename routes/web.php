@@ -1,11 +1,13 @@
 <?php
 
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/orders')->name('home');
+Route::post('currency/{currency}', CurrencyController::class)->name('currency');
 
 Route::get('orders', [OrderController::class, 'index'])->name('orders');
 Route::get('orders/{order:uuid}', [OrderController::class, 'show'])->name('orders.show')->whereUuid('order');

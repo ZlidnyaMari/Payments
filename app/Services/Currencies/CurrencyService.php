@@ -2,6 +2,7 @@
 
 namespace App\Services\Currencies;
 
+use App\Services\Currencies\Action\ConvertCurrencyAction;
 use App\Services\Currencies\Action\UpdateCurrencyPricesAction;
 use App\Services\Currencies\Sources\Source;
 use App\Services\Currencies\Sources\SourceEnum;
@@ -17,5 +18,10 @@ class CurrencyService
     public function updatePrices(): UpdateCurrencyPricesAction
     {
         return app(UpdateCurrencyPricesAction::class);
+    }
+
+    public function convert(): ConvertCurrencyAction
+    {
+        return app(ConvertCurrencyAction::class);
     }
 }
