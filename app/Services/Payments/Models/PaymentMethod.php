@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $name
  * @property boolean $active
  * @property PaymentDriverEnum $driver
+ * @property string $driver_currency_id
  * @property Carbon $created_at
  * @property Carbon $updated_at
  */
@@ -18,7 +19,7 @@ class PaymentMethod extends Model
 {
     protected $fillable = [
         'name', 'active',
-        'driver',
+        'driver', 'driver_currency_id'
     ];
 
     protected $casts = [

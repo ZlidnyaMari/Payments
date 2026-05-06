@@ -21,6 +21,7 @@ class PaymentController extends Controller
     {
         $methods = $this->paymentService
             ->getPaymentMethods()
+            //->currency($payment->currency_id)
             ->active(true)
             ->get();
 
@@ -34,11 +35,13 @@ class PaymentController extends Controller
 
         $method = $this->paymentService
             ->getPaymentMethods()
+           // ->currency($payment->currency_id)
             ->id($validate['method_id'])
             ->active(true)
             ->first();
 
         abort_unless($method, 404);
+       // abort_unless($payment->currency_id === $method->driver_currency_id, 404);
 
         $this->paymentService
             ->updatePayment()

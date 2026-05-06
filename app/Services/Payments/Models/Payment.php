@@ -25,6 +25,8 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property PaymentMethod $method
  * @property PaymentDriverEnum $driver
  * @property string|null $driver_payment_id
+ * @property string|null $driver_currency_id
+ * @property AmountValue|null $driver_amount
  */
 
 class Payment extends Model
@@ -35,13 +37,16 @@ class Payment extends Model
         'currency_id', 'amount',
         'payable_type', 'payable_id',
         'method_id',
-        'driver', 'driver_payment_id'
+
+        'driver', 'driver_payment_id',
+        'driver_currency_id', 'driver_amount',
     ];
 
     protected $casts = [
         'status' => PaymentStatusEnum::class,
         'amount' => AmountValue::class,
         'driver' => PaymentDriverEnum::class,
+        'driver_amount' => AmountValue::class,
     ];
 
     public function payable(): MorphTo
@@ -53,5 +58,4 @@ class Payment extends Model
     {
         return $this->belongsTo(PaymentMethod::class);
     }
-
 }

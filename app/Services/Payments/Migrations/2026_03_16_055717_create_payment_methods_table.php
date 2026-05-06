@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('name')->comment('спосб оплаты');
             $table->boolean('active')->default(false);
             $table->string('driver')->comment('сервис оплаты');
+
+            $table->string('driver_currency_id')->comment('Валюта провайдера');
+            $table->foreign('driver_currency_id')->references('id')->on('currencies');
             $table->timestamps();
         });
     }

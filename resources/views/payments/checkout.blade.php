@@ -51,7 +51,7 @@
                                         <select name="method_id" class="form-control">
                                             <option value="">Cпособ оплаты</option>
                                             @foreach($methods as $method)
-                                                <option value="{{$method->id}}">{{$method->name}}</option>
+                                                <option value="{{$method->id}}">{{$method->name}} ({{$method->driver_currency_id}})</option>
                                             @endforeach
                                         </select>
                                     </div>

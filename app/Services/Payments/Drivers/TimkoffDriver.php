@@ -16,7 +16,7 @@ class TimkoffDriver extends PaymentDriver
     {
        $entity = $this->tinkoffService->createPayment(
             new CreatePaymentData(
-                amount: $payment->amount->value() * 100, // тинькоф работает с суммами в копейках, можно метод преобразования написать в сам Enum
+                amount: $payment->driver_amount->value() * 100, // тинькоф работает с суммами в копейках, можно метод преобразования написать в сам Enum
                 order: $payment->uuid, // важно что бы он не повторялся и платежи не путались, по этому используем uuid
                 successUrl: route('payments.success', ['uuid' => $payment->uuid]),
                 failureUrl: route('payments.failure', ['uuid' => $payment->uuid]),
